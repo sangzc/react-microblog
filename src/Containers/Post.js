@@ -2,29 +2,25 @@ import React, { Component } from 'react';
 import EditPostForm from './EditPostForm';
 import Comments from '../Components/Comments';
 import { connect } from 'react-redux';
-import { addNewPost,
-         deletePost,
-         updatePost,
-         addNewComment,
+import { addNewComment,
          deleteComment,
-         getAllPostFromAPI
+         getPostFromAPI,
+         deletePostFromAPI
          } from '../actions';
 
 class Post extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            isEditing: false
-        }
+        this.state = { isEditing: false };
         this.handleDelete = this.handleDelete.bind(this);
         this.handleEditCancel = this.handleEditCancel.bind(this);
         this.handleEditShow = this.handleEditShow.bind(this);
     }
     
     handleDelete() {
-        // call this.props.deletePost
-        this.props.deletePost(this.props.post.id);
+        // call the delete post API
+        this.props.deletePostFromAPI(this.props.post.id);
         // then redirect to homepage
         this.props.history.push('/');
     }
@@ -43,26 +39,24 @@ class Post extends Component {
 
     componentDidMount() {
         // ADD thunked dispatch prop here:
-        this.props.getAllPostFromAPI(this.props.id);
+        this.props.getPostFromAPI(this.props.id);
     }
 
     render() {
 
         if (this.props.post === undefined) {
 
-            return <div>HIII I'm loading</div>
+            return <div>Loading...</div>
 
         } else {
 
             let display;
-            console.log("THIS IS FROM OUR Post.js RENDER", this.props )
-            const { title, 
-                   description, 
-                   body, 
-                   id, 
-                   comments } = this.props.post;
 
-            console.log("THESE ARE OUR COMMENTS", comments)
+            const { title, 
+                    description, 
+                    body, 
+                    id, 
+                    comments } = this.props.post;
     
             const commentComponent = (
                 <Comments 
@@ -88,9 +82,8 @@ class Post extends Component {
                 (<>
                     <EditPostForm 
                         setIsEditingFalse={this.handleEditCancel}
-                        triggerUpdatePost={this.props.updatePost}
                         postData={ this.props.post }
-                        />
+                    />
                     {commentComponent}
                  </>)
             }
@@ -100,18 +93,15 @@ class Post extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps){
-    // const post = state.posts.find(p => ownProps.id == p.id)
-    return { post: state.post };
+function mapStateToProps(state){
+    return { ...state, post: state.post };
 }
 
 const mapDispatchToProps = {
-    addNewPost,
-    deletePost,
-    updatePost,
     addNewComment,
     deleteComment,
-    getAllPostFromAPI
+    getPostFromAPI,
+    deletePostFromAPI
 };
 
 

@@ -1,5 +1,3 @@
-import uuid from 'uuid/v4';
-
 import {
     ADD_NEW_POST,
     DELETE_POST,
@@ -7,7 +5,9 @@ import {
     ADD_NEW_COMMENT,
     DELETE_COMMENT,
     LOAD_POSTS,
-    LOAD_POST
+    LOAD_POST,
+    UPVOTE_POST,
+    DOWNVOTE_POST
 } from './actionTypes';
 
 const INITIAL_STATE = {
@@ -19,65 +19,56 @@ export default function rootReducer(state = INITIAL_STATE, action) {
     if (action.type === ADD_NEW_POST) {
         let newPost = action.payload;
         newPost.comments =[];
-        newPost.id = uuid();
-        return { posts: [...state.posts, newPost] };
+        return { ...state, posts: [...state.posts, newPost] };
     }
 
     else if (action.type === DELETE_POST) {
-        const posts = state.posts.filter(p => p.id === action.payload.id)
-        return { posts };
+        const posts = state.posts.filter(p => p.id !== action.payload)
+        return { ...state, posts };
     }
 
     else if (action.type === UPDATE_POST) {
         // payload: { postID, updatePost }
-        console.log('In root reducer update post',  action.payload, state.posts)
-
-        const updatedPosts = state.posts.map(
-            p => p.id === action.payload.postID
-                ? p = {...action.payload.updatedPost, id: p.id}
-                : p
-        );
-
-        console.log('updated post is', updatedPosts)
-
-        return { posts: updatedPosts };
+        let updatedPost = action.payload.updatedPost
+        updatedPost.comments = [];
+        return { ...state, post: action.payload.updatedPost };
     }
 
     else if (action.type === ADD_NEW_COMMENT) {
-        let newComment = action.payload.comment
-        newComment.id = uuid();
-        // payload: {postID, comment}
-        let updatedPosts = state.posts.map(
-            p => (p.id === action.payload.postID)
-                ? {
-                    ...p,
-                    comments: [...p.comments, newComment]
-                }
-                : p);
-        return { posts: updatedPosts };
+        const newComment = action.payload.comment;
+        let updatedPost = {
+            ...state.post, 
+            comments: [...state.post.comments, newComment]
+        }
+        return { ...state, post: updatedPost };
     }
 
     else if (action.type === DELETE_COMMENT) {
         // payload: {postID, commentID}
-        let updatedPosts = state.posts.map(
-            p => p.id === action.payload.postID
-                ? {
-                    ...p,
-                    comments:
-                        p.comments.filter(
-                            c => c.id !== action.payload.commentID)
-                }
-                : p)
-        return { posts: updatedPosts };
+        const updatedComments = state.post.comments.filter(
+            p => p.id !== action.payload.commentID
+        )
+        let updatedPost = {...state.post, comments: updatedComments}
+        return { ...state, post: updatedPost };
     }
 
     else if (action.type === LOAD_POSTS) {
-        return { posts: action.payload}
+        return { ...state, posts: action.payload}
     }
 
     else if (action.type === LOAD_POST) {
-        console.log("HELLO FROM THE ROOTREDUCER FOR LOAD_POST")
-        return { post: action.payload }
+        return { ...state, post: action.payload }
+    }
+
+    else if (action.type === UPVOTE_POST) {
+        // state => { posts: [] }
+        console.log("UP_VOTE, state", state)
+        return { ...state }
+    }
+
+    else if (action.type === DOWNVOTE_POST) {
+        console.log("DOWN_VOTE, state", state)
+        return { ...state }
     }
 
     else {

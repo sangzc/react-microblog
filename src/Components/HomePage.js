@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PostList from '../Containers/PostList';
-import { connect } from 'react-redux';
-
 
 class HomePage extends Component {
     render() {
@@ -14,10 +12,4 @@ class HomePage extends Component {
     }
 }
 
-function mapStateToProps(state){
-    return { posts: state.posts };
-}
-
-
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

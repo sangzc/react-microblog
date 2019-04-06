@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 class PostForm extends Component {
+  static defaultProps = {
+    post: { title: "", description: "", body: "" }
+  }
 
   constructor(props) {
     super(props)

@@ -5,4 +5,6 @@ export const ADD_NEW_COMMENT = 'ADD_NEW_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
+export const UPVOTE_POST = 'UPVOTE_POST';
+export const DOWNVOTE_POST = 'DOWNVOTE_POST';
 

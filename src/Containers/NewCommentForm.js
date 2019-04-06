@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addNewComment } from '../actions';
+import { sendCommentToAPI } from '../actions';
 
 
 class NewCommentForm extends Component {
@@ -15,7 +15,10 @@ class NewCommentForm extends Component {
 
     handleSubmit(evt){
         evt.preventDefault();
-        this.props.addNewComment(this.props.postId, this.state);
+        this.props.sendCommentToAPI(
+                this.props.postId, 
+                this.state
+        );
         this.setState({ 
             comment: '' 
         });
@@ -44,14 +47,6 @@ class NewCommentForm extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps){
-    return {};
-}
-
-const mapDispatchToProps = {
-   addNewComment
-};
-
 export default connect(
-        mapStateToProps, 
-        mapDispatchToProps)(NewCommentForm);
+        null, 
+        {sendCommentToAPI})(NewCommentForm);

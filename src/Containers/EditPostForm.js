@@ -3,9 +3,9 @@ import PostForm from '../Components/PostForm';
 import { connect } from 'react-redux';
 import { addNewPost,
          deletePost,
-         updatePost,
          addNewComment,
-         deleteComment
+         deleteComment,
+         updatePostWithAPI
          } from '../actions';
 
 class EditPostForm extends Component {
@@ -21,8 +21,9 @@ class EditPostForm extends Component {
     }
 
     handleSubmit(post, id) {
-        this.props.updatePost(id, post)
+        this.props.updatePostWithAPI(id, post)
         this.props.setIsEditingFalse()
+        console.log("EditPostForm, this.props after update ", this.props)
     }
 
     render() {
@@ -44,9 +45,11 @@ function mapStateToProps(state, ownProps){
 const mapDispatchToProps = {
     addNewPost,
     deletePost,
-    updatePost,
     addNewComment,
     deleteComment,
+    updatePostWithAPI
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPostForm);
+export default connect(
+    mapStateToProps, 
+    mapDispatchToProps)(EditPostForm);
