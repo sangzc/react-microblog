@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 
 class Post extends Component {
 
@@ -28,18 +28,21 @@ class Post extends Component {
         <CardMedia 
           style={ {height:0, paddingTop: '56.25%'}} 
           image="https://s.abcnews.com/images/Lifestyle/puppy-ht-3-er-170907_16x9_992.jpg"
-          title="sample texttttt"
         />
         <Link to={`/${id}`}>
           <Typography variant="h5" color="inherit">{title}</Typography>
         </Link>
         <CardContent>
           <Typography variant="body2">{description}</Typography>
-          <Typography>{votes} votes</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={() => this.handleUpVote(id)}>🔺</Button>
-          <Button onClick={() => this.handleDownVote(id)}>🔻</Button>
+          <Typography variant="headline">{votes} votes</Typography>
+          <Fab color="default" onClick={() => this.handleDownVote(id)}>
+            <i class="material-icons">arrow_downward</i>
+          </Fab>
+          <Fab color="primary" onClick={() => this.handleUpVote(id)}>
+            <i class="material-icons">arrow_upward</i>
+          </Fab>
         </CardActions>
       </Card>
     );
