@@ -115,6 +115,7 @@ export function getAllPostsFromAPI(){
         const res = await axios.get(
             `${HOST_NAME}/posts`); 
         const posts = res.data;
+        console.log("getAllPostsFromAPI", res)
         dispatch(gotPosts(posts));
     }
 }
@@ -151,10 +152,10 @@ export function upVotePostFromAPI(postID) {
     }
 }
 
-export function upVotePost(votes){
+export function upVotePost(postID, votes){
     return { 
         type: UPVOTE_POST, 
-        payload: votes
+        payload: {postID, votes}
     };
 }
 

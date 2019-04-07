@@ -9,20 +9,23 @@ import { getAllPostsFromAPI,
 class PostList extends Component {
 
   componentDidMount() {
-    // let resp = await axios.get('http://localhost:5000/api/posts');
+    console.log("componentDidMount is running!")
     this.props.getAllPostsFromAPI();
   }
 
   render() {
+    console.log("PostList, this.props", this.props)
+    // if (this.props.posts.posts === undefined) return <div>Loading</div>
+
+    if (!this.props.posts) return <div>Loading</div>
     return (
       <div>
         {this.props.posts.map(
-          ({ title, description, body, id, votes}) => 
+          ({ title, description, id, votes}) => 
           <PostCard
             key={id} 
             title={title}
             description={description}
-            body={body}
             votes={votes}
             id={id}
             handleUpVote={this.props.upVotePostFromAPI}
@@ -34,7 +37,8 @@ class PostList extends Component {
 }
 
 function mapStateToProps(state) {
-  return { posts: state.posts };
+  console.log("PostList, mapStateToProps, state", state)
+  return { ...state, posts: state.posts };
 }
 
 export default connect(
