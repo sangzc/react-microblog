@@ -12,15 +12,16 @@ class NewPostForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleCancel() {
-    // Upon cancel button being clicked, redirect to home
-    this.props.history.push('/');
-  }
 
   handleSubmit(post) {
     // Upon submit button being clicked, add a new post
     // Then redirect to home page.
     this.props.sendPostToAPI(post)
+    this.props.history.push('/');
+  }
+
+  handleCancel() {
+    // Upon cancel button being clicked, redirect to home
     this.props.history.push('/');
   }
 
