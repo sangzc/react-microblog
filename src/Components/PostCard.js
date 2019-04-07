@@ -12,7 +12,6 @@ class Post extends Component {
   }
 
   render() {
-    debugger
     const { title, 
             description, 
             id, 

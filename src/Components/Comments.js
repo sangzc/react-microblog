@@ -5,6 +5,12 @@ import NewCommentForm from '../Containers/NewCommentForm';
 class Comments extends Component {
 
   render() {
+
+    if (!this.props.comments) {
+
+       return <div>Loading ...</div>
+
+    } else {
     const comments = this.props.comments.map(cmt => (
       <Comment 
         message={cmt.text} 
@@ -23,6 +29,6 @@ class Comments extends Component {
       </div>
     )
   }
+};
 }
-
 export default Comments;

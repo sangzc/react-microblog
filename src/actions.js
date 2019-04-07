@@ -115,7 +115,6 @@ export function getAllPostsFromAPI(){
         const res = await axios.get(
             `${HOST_NAME}/posts`); 
         const posts = res.data;
-        console.log("getAllPostsFromAPI", res)
         dispatch(gotPosts(posts));
     }
 }
@@ -132,6 +131,7 @@ export function getPostFromAPI(postID) {
         const res = await axios.get(
             `${HOST_NAME}/posts/${postID}`); 
             const post = res.data;
+        console.log(getPostFromAPI, post)
         dispatch(gotPost(post));
     }
 }

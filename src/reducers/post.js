@@ -17,7 +17,8 @@ export default function rootReducer(state = {}, action) {
         // payload: { postID, updatePost }
         let updatedPost = action.payload.updatedPost
         updatedPost.comments = [];
-        return { ...state, post: action.payload.updatedPost };
+        updatedPost.votes = 0
+        return updatedPost;
     }
 
     else if (action.type === ADD_NEW_COMMENT) {
@@ -26,7 +27,7 @@ export default function rootReducer(state = {}, action) {
             ...state.post, 
             comments: [...state.post.comments, newComment]
         }
-        return { ...state, post: updatedPost };
+        return updatedPost;
     }
 
     else if (action.type === DELETE_COMMENT) {
@@ -35,22 +36,23 @@ export default function rootReducer(state = {}, action) {
             p => p.id !== action.payload.commentID
         )
         let updatedPost = {...state.post, comments: updatedComments}
-        return { ...state, post: updatedPost };
+        return updatedPost;
     }
 
     else if (action.type === LOAD_POST) {
-        return { ...state, post: action.payload }
+        const newPost = action.payload;
+        return newPost;
     }
 
     else if (action.type === UPVOTE_POST) {
         // Currentlystate => { posts: [] }
         const updatedPost = { ...state.post, votes: state.post.votes++}
-        return { ...state, updatedPost }
+        return updatedPost
     }
 
     else if (action.type === DOWNVOTE_POST) {
         const updatedPost = { ...state.post, votes: state.post.votes--}
-        return { ...state, updatedPost }
+        return updatedPost;
     }
 
     else {

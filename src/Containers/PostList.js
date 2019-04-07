@@ -14,9 +14,6 @@ class PostList extends Component {
   }
 
   render() {
-    console.log("PostList, this.props", this.props)
-    // if (this.props.posts.posts === undefined) return <div>Loading</div>
-
     if (!this.props.posts) return <div>Loading</div>
     return (
       <div>

@@ -51,7 +51,7 @@ class Post extends Component {
         } else {
 
             let display;
-
+            console.log("Post, this.props", this.props)
             const { title, 
                     description, 
                     body, 
